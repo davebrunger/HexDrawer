@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DrawingUtils\DrawingUtils.csproj">
-      <Project>{42A7D8E0-ECBC-4D49-9489-A15997141D07}</Project>
+      <Project>{011acd9e-1253-4bb0-ad21-38ec79b4f0d6}</Project>
       <Name>DrawingUtils</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace TuckBoxDrawer
+﻿namespace DrawingUtils
 {
     public enum Corner
     {
