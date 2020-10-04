@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DrawingUtils
+namespace DrawingUtils.TuckBoxes
 {
     public class TuckBox
     {

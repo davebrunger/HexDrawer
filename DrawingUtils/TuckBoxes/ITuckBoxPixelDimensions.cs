@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace DrawingUtils
+﻿namespace DrawingUtils.TuckBoxes
 {
     public interface ITuckBoxPixelDimensions
     {

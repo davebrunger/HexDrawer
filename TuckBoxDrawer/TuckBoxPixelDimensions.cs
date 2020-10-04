@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using DrawingUtils;
+using DrawingUtils.TuckBoxes;
 
 namespace TuckBoxDrawer
 {

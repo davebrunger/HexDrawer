@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using DrawingUtils;
+using DrawingUtils.TuckBoxes;
 
 namespace TuckBoxDrawer
 {
@@ -36,6 +36,25 @@ namespace TuckBoxDrawer
             DisplayPanel.Invalidate();
         }
 
+        private static void DrawRectangles(Graphics graphics, IEnumerable<RectangleDefinition> rectangles, Pen pen)
+        {
+            foreach (var rectangle in rectangles)
+            {
+                var path = RectangleDrawer.DrawRectangle(rectangle);
+                var graphicsPath = new GraphicsPath();
+
+                foreach (var pathSection in path)
+                {
+                    pathSection.Switch(
+                        p => graphicsPath.AddLine(p, p),
+                        a => graphicsPath.AddArc(a.BoundingEllipse, a.StartAngle, a.SweepAngle));
+                }
+
+                graphicsPath.CloseFigure();
+                graphics.DrawPath(pen, graphicsPath);
+            }
+        }
+
         private void DisplayPanel_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(SystemColors.Control);
@@ -49,11 +68,9 @@ namespace TuckBoxDrawer
             var rectangles = new List<RectangleDefinition>(tuckBox.GetFrontAndSides());
             rectangles.AddRange(tuckBox.GetAttachedBack());
 
-            var drawer = new RectangleDrawer(() => new PathImpl(e.Graphics, Pens.Black));
-            foreach (var rectangle in rectangles)
-            {
-                drawer.DrawRectangle(rectangle);
-            }
+            var pen = Pens.Black;
+            
+            DrawRectangles(e.Graphics, rectangles, pen);
         }
 
         private void PrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -76,11 +93,9 @@ namespace TuckBoxDrawer
                     break;
             }
 
-            var drawer = new RectangleDrawer(() => new PathImpl(e.Graphics, Pens.Black));
-            foreach (var rectangle in rectangles)
-            {
-                drawer.DrawRectangle(rectangle);
-            }
+            var pen = Pens.Black;
+
+            DrawRectangles(e.Graphics, rectangles, pen);
 
             nextPage += 1;
             if (nextPage == 3)

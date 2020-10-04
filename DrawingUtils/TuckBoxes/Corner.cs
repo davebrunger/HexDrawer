@@ -1,4 +1,4 @@
-﻿namespace DrawingUtils
+﻿namespace DrawingUtils.TuckBoxes
 {
     public enum Corner
     {

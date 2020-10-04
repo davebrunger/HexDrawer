@@ -1,4 +1,4 @@
-﻿namespace DrawingUtils
+﻿namespace DrawingUtils.Grids
 {
     public enum GridType
     {

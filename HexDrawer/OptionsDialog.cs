@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DrawingUtils;
+using DrawingUtils.Grids;
 
 namespace HexDrawer
 {
@@ -14,7 +15,7 @@ namespace HexDrawer
             GridStyleDropDown.Items.Add(GridType.Hex);
             GridStyleDropDown.Items.Add(GridType.Square);
             GridStyleDropDown.SelectedIndex = 0;
-            GridDrawer = new DrawingUtils.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
+            GridDrawer = new DrawingUtils.Grids.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
                 (float) MarginUpDown.Value);
         }
 
@@ -22,7 +23,7 @@ namespace HexDrawer
         {
             if (GridStyleDropDown.SelectedIndex == 0)
             {
-                GridDrawer = new DrawingUtils.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
+                GridDrawer = new DrawingUtils.Grids.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
                     (float) MarginUpDown.Value);
             }
             else

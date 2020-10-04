@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace DrawingUtils
+namespace DrawingUtils.TuckBoxes
 {
     public class RectangleDefinition
     {
