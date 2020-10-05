@@ -16,9 +16,46 @@ namespace DrawingUtils.TuckBoxes
             Rectangle = rectangle;
             Cutout = cutout;
         }
+
         public RectangleDefinition(float left, float top, float width, float height, CornersDefinition corners = null,
             bool cutout = false) : this(new RectangleF(left, top, width, height), corners, cutout)
         {
+        }
+
+        public Path GetPath()
+        {
+            var diameterX = Corners.Radius.Width * 2;
+            var diameterY = Corners.Radius.Height * 2;
+
+            var size = new SizeF(diameterX, diameterY);
+
+            var path = new Path(true);
+
+            path = Corners.RoundedCorners.Contains(Corner.TopLeft)
+                ? path.AddArc(Rectangle.Location, size, 180, 90)
+                : path.AddPoint(Rectangle.Location);
+
+            if (Cutout)
+            {
+                path = path.AddArc(
+                    Rectangle.Left + Rectangle.Width / 2 - Corners.Radius.Width, Rectangle.Top - Corners.Radius.Height,
+                    diameterX, diameterY, 180, -180);
+            }
+
+            path = Corners.RoundedCorners.Contains(Corner.TopRight)
+                ? path.AddArc(
+                    Rectangle.Right - diameterX, Rectangle.Top, diameterX, diameterY, 270, 90)
+                : path.AddPoint(Rectangle.Right, Rectangle.Top);
+
+            path = Corners.RoundedCorners.Contains(Corner.BottomRight)
+                ? path.AddArc(Rectangle.Right - diameterX, Rectangle.Bottom - diameterY, diameterX, diameterY, 0, 90)
+                : path.AddPoint(Rectangle.Right, Rectangle.Bottom);
+
+            path = Corners.RoundedCorners.Contains(Corner.BottomLeft)
+                ? path.AddArc(Rectangle.Left, Rectangle.Bottom - diameterY, diameterX, diameterY, 90, 90)
+                : path.AddPoint(Rectangle.Left, Rectangle.Bottom);
+
+            return path;
         }
     }
 }

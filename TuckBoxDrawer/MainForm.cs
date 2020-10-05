@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using DrawingUtils;
 using DrawingUtils.TuckBoxes;
+using FrameworkDrawingUtils;
 
 namespace TuckBoxDrawer
 {
@@ -36,22 +38,13 @@ namespace TuckBoxDrawer
             DisplayPanel.Invalidate();
         }
 
-        private static void DrawRectangles(Graphics graphics, IEnumerable<RectangleDefinition> rectangles, Pen pen)
+        private static void DrawPaths(Graphics graphics, IEnumerable<Path> paths, Pen pen)
         {
-            foreach (var rectangle in rectangles)
+            var pathDrawer = new PathDrawer(graphics, pen);
+
+            foreach (var path in paths)
             {
-                var path = RectangleDrawer.DrawRectangle(rectangle);
-                var graphicsPath = new GraphicsPath();
-
-                foreach (var pathSection in path)
-                {
-                    pathSection.Switch(
-                        p => graphicsPath.AddLine(p, p),
-                        a => graphicsPath.AddArc(a.BoundingEllipse, a.StartAngle, a.SweepAngle));
-                }
-
-                graphicsPath.CloseFigure();
-                graphics.DrawPath(pen, graphicsPath);
+                pathDrawer.DrawPath(path);
             }
         }
 
@@ -65,12 +58,12 @@ namespace TuckBoxDrawer
 
             var tuckBox = new TuckBox(pixelDimensions);
 
-            var rectangles = new List<RectangleDefinition>(tuckBox.GetFrontAndSides());
-            rectangles.AddRange(tuckBox.GetAttachedBack());
+            var paths = new List<Path>(tuckBox.GetFrontAndSides());
+            paths.AddRange(tuckBox.GetAttachedBack());
 
             var pen = Pens.Black;
             
-            DrawRectangles(e.Graphics, rectangles, pen);
+            DrawPaths(e.Graphics, paths, pen);
         }
 
         private void PrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -81,21 +74,21 @@ namespace TuckBoxDrawer
                 MarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, 100, 100);
 
             var tuckBox = new TuckBox(pixelDimensions);
-            var rectangles = new List<RectangleDefinition>();
+            var paths = new List<Path>();
 
             switch (nextPage)
             {
                 case 1:
-                    rectangles.AddRange(tuckBox.GetFrontAndSides());
+                    paths.AddRange(tuckBox.GetFrontAndSides());
                     break;
                 case 2:
-                    rectangles.AddRange(tuckBox.GetSeparateBack());
+                    paths.AddRange(tuckBox.GetSeparateBack());
                     break;
             }
 
             var pen = Pens.Black;
 
-            DrawRectangles(e.Graphics, rectangles, pen);
+            DrawPaths(e.Graphics, paths, pen);
 
             nextPage += 1;
             if (nextPage == 3)

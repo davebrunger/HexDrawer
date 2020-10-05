@@ -35,7 +35,7 @@
             this.ChangeColourButton = new System.Windows.Forms.Button();
             this.ColourPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.CustomCancelButton = new System.Windows.Forms.Button();
             this.OkButton = new System.Windows.Forms.Button();
             this.ColourDialog = new System.Windows.Forms.ColorDialog();
             this.label4 = new System.Windows.Forms.Label();
@@ -135,15 +135,15 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Colour:";
             // 
-            // CancelButton
+            // CustomCancelButton
             // 
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(210, 132);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 10;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CustomCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CustomCancelButton.Location = new System.Drawing.Point(210, 132);
+            this.CustomCancelButton.Name = "CustomCancelButton";
+            this.CustomCancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CustomCancelButton.TabIndex = 10;
+            this.CustomCancelButton.Text = "Cancel";
+            this.CustomCancelButton.UseVisualStyleBackColor = true;
             // 
             // OkButton
             // 
@@ -182,7 +182,7 @@
             this.Controls.Add(this.GridStyleDropDown);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.OkButton);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.CustomCancelButton);
             this.Controls.Add(this.ChangeColourButton);
             this.Controls.Add(this.ColourPanel);
             this.Controls.Add(this.label3);
@@ -213,7 +213,7 @@
         private System.Windows.Forms.Button ChangeColourButton;
         private System.Windows.Forms.Panel ColourPanel;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button CustomCancelButton;
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.ColorDialog ColourDialog;
         private System.Windows.Forms.Label label4;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DrawingUtils.TuckBoxes
 {
@@ -65,39 +66,40 @@ namespace DrawingUtils.TuckBoxes
                 pixelDimensions.YTabInPixels, pixelDimensions.BuildCornersDefinition(Corner.BottomRight));
         }
 
-        public IEnumerable<RectangleDefinition> GetAttachedBack()
+        public IEnumerable<Path> GetAttachedBack()
         {
             var boxLeft = pixelDimensions.XMarginInPixels + pixelDimensions.XDepthInPixels +
                           pixelDimensions.WidthInPixels + pixelDimensions.XDepthInPixels;
             var tabLeft = boxLeft + pixelDimensions.WidthInPixels;
             var top = pixelDimensions.YMarginInPixels + pixelDimensions.YTabInPixels + pixelDimensions.XDepthInPixels;
-            yield return new RectangleDefinition(boxLeft, top, pixelDimensions.WidthInPixels, pixelDimensions.HeightInPixels,
-                pixelDimensions.BuildCornersDefinition(), true);
-            yield return new RectangleDefinition(tabLeft, top, pixelDimensions.XTabInPixels, pixelDimensions.HeightInPixels);
+            yield return new RectangleDefinition(boxLeft, top, pixelDimensions.WidthInPixels,
+                pixelDimensions.HeightInPixels, pixelDimensions.BuildCornersDefinition(), true).GetPath();
+            yield return new RectangleDefinition(tabLeft, top, pixelDimensions.XTabInPixels,
+                pixelDimensions.HeightInPixels).GetPath();
         }
 
-        public IEnumerable<RectangleDefinition> GetSeparateBack()
+        public IEnumerable<Path> GetSeparateBack()
         {
             var leftTabLeft = pixelDimensions.XMarginInPixels;
             var boxLeft = leftTabLeft + pixelDimensions.XTabInPixels;
             var rightTabLeft = boxLeft + pixelDimensions.WidthInPixels;
             var top = pixelDimensions.YMarginInPixels;
             yield return new RectangleDefinition(leftTabLeft, top, pixelDimensions.XTabInPixels,
-                pixelDimensions.HeightInPixels);
+                pixelDimensions.HeightInPixels).GetPath();
             yield return new RectangleDefinition(boxLeft, top, pixelDimensions.WidthInPixels, pixelDimensions.HeightInPixels,
-                pixelDimensions.BuildCornersDefinition(), true);
+                pixelDimensions.BuildCornersDefinition(), true).GetPath();
             yield return new RectangleDefinition(rightTabLeft, top, pixelDimensions.XTabInPixels,
-                pixelDimensions.HeightInPixels);
+                pixelDimensions.HeightInPixels).GetPath();
         }
 
-        public IEnumerable<RectangleDefinition> GetFrontAndSides()
+        public IEnumerable<Path> GetFrontAndSides()
         {
-            var rectangles = new List<RectangleDefinition>();
-            rectangles.AddRange(GetTop());
-            rectangles.AddRange(GetLeftSide());
-            rectangles.AddRange(GetFront());
-            rectangles.AddRange(GetBottom());
-            rectangles.AddRange(GetRightSide());
+            var rectangles = new List<Path>();
+            rectangles.AddRange(GetTop().Select(r => r.GetPath()));
+            rectangles.AddRange(GetLeftSide().Select(r => r.GetPath()));
+            rectangles.AddRange(GetFront().Select(r => r.GetPath()));
+            rectangles.AddRange(GetBottom().Select(r => r.GetPath()));
+            rectangles.AddRange(GetRightSide().Select(r => r.GetPath()));
             return rectangles;
         }
     }

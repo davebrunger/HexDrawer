@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace DrawingUtils.TuckBoxes
+namespace DrawingUtils
 {
     public class Arc
     {
