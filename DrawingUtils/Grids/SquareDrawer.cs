@@ -1,69 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace DrawingUtils.Grids
 {
-    public class SquareDrawer : IGridDrawer
+    public class SquareGrid : IGrid
     {
+        private readonly IGridPixelDimensions pixelDimensions;
+
         public GridType GridType => GridType.Square;
 
-        public Color Colour { get; }
-
-        public float PolygonsPerInch { get; }
-
-        public float MarginInInches { get; }
-
-        public SquareDrawer(Color colour, float hexesPerInch, float marginInInches)
+        public SquareGrid(IGridPixelDimensions pixelDimensions)
         {
-            Colour = colour;
-            PolygonsPerInch = hexesPerInch;
-            MarginInInches = marginInInches;
+            this.pixelDimensions = pixelDimensions;
         }
 
-        private void DrawSquare(float x, float y, float squareHeight, float squareWidth, bool drawTopEdge,
-            bool drawLeftEdge, Action<float, float, float, float> drawLine)
+        private Path DrawSquare(float x, float y, bool drawTopEdge, bool drawLeftEdge)
         {
-            drawLine(x, y + squareHeight, x + squareWidth, y + squareHeight);
-            drawLine(x + squareWidth, y, x + squareWidth, y + squareHeight);
-            if (drawTopEdge)
-            {
-                drawLine(x, y, x + squareWidth, y);
-            }
+            var path = new Path();
 
             if (drawLeftEdge)
             {
-                drawLine(x, y, x, y + squareHeight);
+                path = path.AddPoint(x, y);
             }
+
+            path = path.AddPoint(x, y + pixelDimensions.PolygonHeightInPixels);
+            path = path.AddPoint(x + pixelDimensions.PolygonWidthInPixels, y + pixelDimensions.PolygonHeightInPixels);
+            path = path.AddPoint(x + pixelDimensions.PolygonWidthInPixels, y);
+
+            if (drawTopEdge)
+            {
+                path = path.AddPoint(x, y);
+            }
+
+            return path;
         }
 
-        public void DrawGrid(float widthInInches, float heightInInches, float dpiX, float dpiY,
-            float hardXMarginInches, float hardYMarginInches, Action<float, float, float, float> drawLine)
+        public IEnumerable<Path> GetGrid()
         {
-            var xMargin = Math.Max(MarginInInches, hardXMarginInches) * dpiX;
-            var yMargin = Math.Max(MarginInInches, hardYMarginInches) * dpiY;
-            var width = (int) (widthInInches * dpiX);
-            var height = (int) (heightInInches * dpiY);
+            var squaresAcross = (int) ((pixelDimensions.GridWidthInPixels - 2 * pixelDimensions.XMarginInPixels) /
+                                       pixelDimensions.PolygonWidthInPixels);
+            var squaresDown = (int) ((pixelDimensions.GridHeightInPixels - 2 * pixelDimensions.XMarginInPixels) /
+                                     pixelDimensions.PolygonHeightInPixels);
 
-            var squareHeightInches = 1 / PolygonsPerInch;
-            var squareWidth = squareHeightInches * dpiX;
-            var squareHeight = squareHeightInches * dpiY;
+            var totalHexWidth = squaresAcross * pixelDimensions.PolygonWidthInPixels;
+            var totalHexHeight = squaresDown * pixelDimensions.PolygonHeightInPixels;
 
-            var squaresAcross = (int) ((width - 2 * xMargin) / squareWidth);
-            var squaresDown = (int) ((height - 2 * yMargin) / squareHeight);
-
-            var totalHexWidth = squaresAcross * squareWidth;
-            var totalHexHeight = squaresDown * squareHeight;
-
-            var adjustedXMargin = (int) ((width - totalHexWidth) / 2);
-            var adjustedYMargin = (int) ((height - totalHexHeight) / 2);
+            var adjustedXMargin = (int) ((pixelDimensions.GridWidthInPixels - totalHexWidth) / 2);
+            var adjustedYMargin = (int) ((pixelDimensions.GridHeightInPixels - totalHexHeight) / 2);
 
 
             for (var y = 0; y < squaresDown; y++)
             {
                 for (var x = 0; x < squaresAcross; x++)
                 {
-                    DrawSquare(adjustedXMargin + x * squareWidth, adjustedYMargin + y * squareHeight, squareHeight,
-                        squareWidth, y == 0, x == 0, drawLine);
+                    yield return DrawSquare(adjustedXMargin + x * pixelDimensions.PolygonWidthInPixels,
+                        adjustedYMargin + y * pixelDimensions.PolygonHeightInPixels, y == 0, x == 0);
                 }
             }
         }

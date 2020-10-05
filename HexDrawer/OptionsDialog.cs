@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using DrawingUtils;
 using DrawingUtils.Grids;
 
 namespace HexDrawer
 {
     public partial class OptionsDialog : Form
     {
-        public IGridDrawer GridDrawer { get; private set; }
+        public HexDrawerOptions Options { get; private set; }
 
         public OptionsDialog()
         {
@@ -15,30 +14,30 @@ namespace HexDrawer
             GridStyleDropDown.Items.Add(GridType.Hex);
             GridStyleDropDown.Items.Add(GridType.Square);
             GridStyleDropDown.SelectedIndex = 0;
-            GridDrawer = new DrawingUtils.Grids.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
-                (float) MarginUpDown.Value);
+            Options = new HexDrawerOptions(ColourPanel.BackColor, (int) HexesPerInchUpDown.Value,
+                (float) MarginUpDown.Value, GridType.Hex);
         }
 
         private void OkButton_Click(object sender, EventArgs e)
         {
             if (GridStyleDropDown.SelectedIndex == 0)
             {
-                GridDrawer = new DrawingUtils.Grids.HexDrawer(ColourPanel.BackColor, (float) HexesPerInchUpDown.Value,
-                    (float) MarginUpDown.Value);
+                Options = new HexDrawerOptions(ColourPanel.BackColor, (int) HexesPerInchUpDown.Value,
+                    (float) MarginUpDown.Value, GridType.Hex);
             }
             else
             {
-                GridDrawer = new SquareDrawer(ColourPanel.BackColor, (float)HexesPerInchUpDown.Value,
-                    (float)MarginUpDown.Value);
+                Options = new HexDrawerOptions(ColourPanel.BackColor, (int) HexesPerInchUpDown.Value,
+                    (float) MarginUpDown.Value, GridType.Square);
             }
         }
 
         private void OptionsDialog_Shown(object sender, EventArgs e)
         {
-            ColourPanel.BackColor = GridDrawer.Colour;
-            HexesPerInchUpDown.Value = (decimal) GridDrawer.PolygonsPerInch;
-            MarginUpDown.Value = (decimal) GridDrawer.MarginInInches;
-            switch (GridDrawer.GridType)
+            ColourPanel.BackColor = Options.Colour;
+            HexesPerInchUpDown.Value = (decimal) Options.PolygonsPerInch;
+            MarginUpDown.Value = (decimal) Options.MarginInInches;
+            switch (Options.GridType)
             {
                 case GridType.Hex:
                     GridStyleDropDown.SelectedIndex = 0;
@@ -58,11 +57,6 @@ namespace HexDrawer
             {
                 ColourPanel.BackColor = ColourDialog.Color;
             }
-        }
-
-        private void OptionsDialog_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

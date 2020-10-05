@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HexDrawerOptions.cs" />
+    <Compile Include="SquareGridPixelDimensions.cs" />
+    <Compile Include="HexGridPixelDimensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +95,10 @@
     <ProjectReference Include="..\DrawingUtils\DrawingUtils.csproj">
       <Project>{011acd9e-1253-4bb0-ad21-38ec79b4f0d6}</Project>
       <Name>DrawingUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrameworkDrawingUtils\FrameworkDrawingUtils.csproj">
+      <Project>{D68365E1-4CEE-4CBB-84BC-9BC7E3FAACED}</Project>
+      <Name>FrameworkDrawingUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,15 +28,16 @@ namespace TuckBoxDrawer
         public float YCornerInPixels { get; }
 
         public TuckBoxPixelDimensions(float heightInInches, float widthInInches, float depthInInches,
-            float marginInInches, float tabAsFractionOfDepth, float cornerAsFractionOfTab, float dpiX, float dpiY)
+            float xMarginInInches, float yMarginInInches, float tabAsFractionOfDepth, float cornerAsFractionOfTab,
+            float dpiX, float dpiY)
         {
             HeightInPixels = heightInInches * dpiY;
             WidthInPixels = widthInInches * dpiX;
             XDepthInPixels = depthInInches * dpiX;
             YDepthInPixels = depthInInches * dpiY;
 
-            XMarginInPixels = marginInInches * dpiX;
-            YMarginInPixels = marginInInches * dpiY;
+            XMarginInPixels = xMarginInInches * dpiX;
+            YMarginInPixels = yMarginInInches * dpiY;
 
             var tabInInches = Math.Min(depthInInches, widthInInches / 2) * tabAsFractionOfDepth;
 

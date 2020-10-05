@@ -44,7 +44,7 @@ namespace TuckBoxDrawer
 
             foreach (var path in paths)
             {
-                pathDrawer.DrawPath(path);
+                pathDrawer.DrawPaths(path);
             }
         }
 
@@ -54,7 +54,8 @@ namespace TuckBoxDrawer
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             var pixelDimensions = new TuckBoxPixelDimensions(HeightInInches, WidthInInches, DepthInInches,
-                MarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, e.Graphics.DpiX, e.Graphics.DpiY);
+                MarginInInches, MarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, e.Graphics.DpiX,
+                e.Graphics.DpiY);
 
             var tuckBox = new TuckBox(pixelDimensions);
 
@@ -62,7 +63,7 @@ namespace TuckBoxDrawer
             paths.AddRange(tuckBox.GetAttachedBack());
 
             var pen = Pens.Black;
-            
+
             DrawPaths(e.Graphics, paths, pen);
         }
 
@@ -70,8 +71,11 @@ namespace TuckBoxDrawer
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
+            var xMarginInInches = Math.Max(MarginInInches, e.PageSettings.HardMarginX / 100f);
+            var yMarginInInches = Math.Max(MarginInInches, e.PageSettings.HardMarginY / 100f);
+
             var pixelDimensions = new TuckBoxPixelDimensions(HeightInInches, WidthInInches, DepthInInches,
-                MarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, 100, 100);
+                xMarginInInches, yMarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, 100, 100);
 
             var tuckBox = new TuckBox(pixelDimensions);
             var paths = new List<Path>();

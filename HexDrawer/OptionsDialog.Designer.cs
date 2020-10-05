@@ -195,7 +195,6 @@
             this.MinimizeBox = false;
             this.Name = "OptionsDialog";
             this.Text = "Options";
-            this.Load += new System.EventHandler(this.OptionsDialog_Load);
             this.Shown += new System.EventHandler(this.OptionsDialog_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.HexesPerInchUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MarginUpDown)).EndInit();

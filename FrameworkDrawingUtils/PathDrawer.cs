@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using DrawingUtils;
 
 namespace FrameworkDrawingUtils
@@ -16,25 +18,32 @@ namespace FrameworkDrawingUtils
             this.pen = pen;
         }
 
-        public void DrawPath(Path path)
+        public void DrawPaths(IEnumerable<Path> paths)
         {
-            var graphicsPath = new GraphicsPath();
-
-            foreach (var pathSection in path.Segments)
+            foreach (var path in paths)
             {
-                pathSection.Switch(
-                    p => graphicsPath.AddLine(p, p),
-                    l => graphicsPath.AddLine(l.FromPoint, l.ToPoint),
-                    a => graphicsPath.AddArc(a.BoundingEllipse, a.StartAngle, a.SweepAngle));
+                var graphicsPath = new GraphicsPath();
+
+                foreach (var pathSection in path.Segments)
+                {
+                    pathSection.Switch(
+                        p => graphicsPath.AddLine(p, p),
+                        l => graphicsPath.AddLine(l.FromPoint, l.ToPoint),
+                        a => graphicsPath.AddArc(a.BoundingEllipse, a.StartAngle, a.SweepAngle));
+                }
+
+                if (path.Closed)
+                {
+                    graphicsPath.CloseFigure();
+                }
+
+                graphics.DrawPath(pen, graphicsPath);
             }
+        }
 
-            if (path.Closed)
-            {
-                graphicsPath.CloseFigure();
-            }
-
-            graphics.DrawPath(pen, graphicsPath);
-
+        public void DrawPaths(params Path[] paths)
+        {
+            DrawPaths(paths.AsEnumerable());
         }
     }
 }
