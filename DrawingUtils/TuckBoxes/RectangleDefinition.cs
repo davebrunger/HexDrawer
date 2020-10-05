@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.IO;
 
 namespace DrawingUtils.TuckBoxes
 {
@@ -10,15 +11,18 @@ namespace DrawingUtils.TuckBoxes
 
         public bool Cutout { get; }
 
-        public RectangleDefinition(RectangleF rectangle, CornersDefinition corners = null, bool cutout = false)
+        public Stream Image { get; }
+
+        public RectangleDefinition(RectangleF rectangle, CornersDefinition corners = null, Stream image = null, bool cutout = false)
         {
             Corners = corners ?? CornersDefinition.Default;
             Rectangle = rectangle;
             Cutout = cutout;
+            Image = image;
         }
 
         public RectangleDefinition(float left, float top, float width, float height, CornersDefinition corners = null,
-            bool cutout = false) : this(new RectangleF(left, top, width, height), corners, cutout)
+            Stream image = null, bool cutout = false) : this(new RectangleF(left, top, width, height), corners, image, cutout)
         {
         }
 
@@ -30,6 +34,11 @@ namespace DrawingUtils.TuckBoxes
             var size = new SizeF(diameterX, diameterY);
 
             var path = new Path(true);
+
+            if (Image != null)
+            {
+                path = path.AddImage(Image, Rectangle);
+            }
 
             path = Corners.RoundedCorners.Contains(Corner.TopLeft)
                 ? path.AddArc(Rectangle.Location, size, 180, 90)

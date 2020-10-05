@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace DrawingUtils.TuckBoxes
@@ -6,10 +7,12 @@ namespace DrawingUtils.TuckBoxes
     public class TuckBox
     {
         private readonly ITuckBoxPixelDimensions pixelDimensions;
+        private readonly Stream image;
 
-        public TuckBox(ITuckBoxPixelDimensions pixelDimensions)
+        public TuckBox(ITuckBoxPixelDimensions pixelDimensions, Stream image = null)
         {
             this.pixelDimensions = pixelDimensions;
+            this.image = image;
         }
 
         private IEnumerable<RectangleDefinition> GetTop()
@@ -39,7 +42,7 @@ namespace DrawingUtils.TuckBoxes
         {
             var left = pixelDimensions.XMarginInPixels + pixelDimensions.XDepthInPixels;
             var top = pixelDimensions.YMarginInPixels + pixelDimensions.YTabInPixels + pixelDimensions.XDepthInPixels;
-            yield return new RectangleDefinition(left, top, pixelDimensions.WidthInPixels, pixelDimensions.HeightInPixels);
+            yield return new RectangleDefinition(left, top, pixelDimensions.WidthInPixels, pixelDimensions.HeightInPixels, CornersDefinition.Default, image);
         }
 
         private IEnumerable<RectangleDefinition> GetBottom()
@@ -73,7 +76,7 @@ namespace DrawingUtils.TuckBoxes
             var tabLeft = boxLeft + pixelDimensions.WidthInPixels;
             var top = pixelDimensions.YMarginInPixels + pixelDimensions.YTabInPixels + pixelDimensions.XDepthInPixels;
             yield return new RectangleDefinition(boxLeft, top, pixelDimensions.WidthInPixels,
-                pixelDimensions.HeightInPixels, pixelDimensions.BuildCornersDefinition(), true).GetPath();
+                pixelDimensions.HeightInPixels, pixelDimensions.BuildCornersDefinition(), image, true).GetPath();
             yield return new RectangleDefinition(tabLeft, top, pixelDimensions.XTabInPixels,
                 pixelDimensions.HeightInPixels).GetPath();
         }
@@ -87,7 +90,7 @@ namespace DrawingUtils.TuckBoxes
             yield return new RectangleDefinition(leftTabLeft, top, pixelDimensions.XTabInPixels,
                 pixelDimensions.HeightInPixels).GetPath();
             yield return new RectangleDefinition(boxLeft, top, pixelDimensions.WidthInPixels, pixelDimensions.HeightInPixels,
-                pixelDimensions.BuildCornersDefinition(), true).GetPath();
+                pixelDimensions.BuildCornersDefinition(), image, true).GetPath();
             yield return new RectangleDefinition(rightTabLeft, top, pixelDimensions.XTabInPixels,
                 pixelDimensions.HeightInPixels).GetPath();
         }

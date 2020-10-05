@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Drawing;
+using System.IO;
 
 namespace DrawingUtils
 {
@@ -9,13 +10,16 @@ namespace DrawingUtils
 
         public bool Closed { get; }
 
-        private Path(bool closed, ImmutableList<OneOf.OneOf<PointF, Line, Arc>> segments)
+        public Image Image { get; }
+
+        private Path(bool closed, ImmutableList<OneOf.OneOf<PointF, Line, Arc>> segments, Image image)
         {
             Closed = closed;
             Segments = segments;
+            Image = image;
         }
 
-        public Path(bool closed, params OneOf.OneOf<PointF, Line, Arc>[] segments) : this(closed, segments.ToImmutableList())
+        public Path(bool closed, params OneOf.OneOf<PointF, Line, Arc>[] segments) : this(closed, segments.ToImmutableList(), null)
         {
         }
 
@@ -25,7 +29,7 @@ namespace DrawingUtils
 
         public Path AddPoint(PointF point)
         {
-            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT0(point)));
+            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT0(point)), Image);
         }
 
         public Path AddPoint(float left, float top)
@@ -35,7 +39,7 @@ namespace DrawingUtils
 
         public Path AddLine(Line line)
         {
-            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT1(line)));
+            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT1(line)), Image);
         }
 
         public Path AddLine(PointF fromPoint, PointF toPoint)
@@ -50,7 +54,7 @@ namespace DrawingUtils
 
         public Path AddArc(Arc arc)
         {
-            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT2(arc)));
+            return new Path(Closed, Segments.Add(OneOf.OneOf<PointF, Line, Arc>.FromT2(arc)), Image);
         }
 
         public Path AddArc(RectangleF boundingEllipse, int startAngle, int sweepAngle)
@@ -62,10 +66,20 @@ namespace DrawingUtils
         {
             return AddArc(new RectangleF(location, size), startAngle, sweepAngle);
         }
-        
+
         public Path AddArc(float left, float top, float width, float height, int startAngle, int sweepAngle)
         {
             return AddArc(new RectangleF(left, top, width, height), startAngle, sweepAngle);
+        }
+
+        public Path AddImage(Image image)
+        {
+            return new Path(Closed, Segments, image);
+        }
+
+        public Path AddImage(Stream data, RectangleF rectangle)
+        {
+            return new Path(Closed, Segments, new Image(data, rectangle));
         }
     }
 }

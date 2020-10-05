@@ -57,14 +57,17 @@ namespace TuckBoxDrawer
                 MarginInInches, MarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, e.Graphics.DpiX,
                 e.Graphics.DpiY);
 
-            var tuckBox = new TuckBox(pixelDimensions);
+            using (var image = GetType().Assembly.GetManifestResourceStream("TuckBoxDrawer.Images.GreenGoblin.png"))
+            {
+                var tuckBox = new TuckBox(pixelDimensions, image);
 
-            var paths = new List<Path>(tuckBox.GetFrontAndSides());
-            paths.AddRange(tuckBox.GetAttachedBack());
+                var paths = new List<Path>(tuckBox.GetFrontAndSides());
+                paths.AddRange(tuckBox.GetAttachedBack());
 
-            var pen = Pens.Black;
+                var pen = Pens.Black;
 
-            DrawPaths(e.Graphics, paths, pen);
+                DrawPaths(e.Graphics, paths, pen);
+            }
         }
 
         private void PrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -77,22 +80,25 @@ namespace TuckBoxDrawer
             var pixelDimensions = new TuckBoxPixelDimensions(HeightInInches, WidthInInches, DepthInInches,
                 xMarginInInches, yMarginInInches, TabAsFractionOfDepth, CornerAsFractionOfTab, 100, 100);
 
-            var tuckBox = new TuckBox(pixelDimensions);
-            var paths = new List<Path>();
-
-            switch (nextPage)
+            using (var image = GetType().Assembly.GetManifestResourceStream("TuckBoxDrawer.Images.GreenGoblin.png"))
             {
-                case 1:
-                    paths.AddRange(tuckBox.GetFrontAndSides());
-                    break;
-                case 2:
-                    paths.AddRange(tuckBox.GetSeparateBack());
-                    break;
+                var tuckBox = new TuckBox(pixelDimensions, image);
+                var paths = new List<Path>();
+
+                switch (nextPage)
+                {
+                    case 1:
+                        paths.AddRange(tuckBox.GetFrontAndSides());
+                        break;
+                    case 2:
+                        paths.AddRange(tuckBox.GetSeparateBack());
+                        break;
+                }
+
+                var pen = Pens.Black;
+
+                DrawPaths(e.Graphics, paths, pen);
             }
-
-            var pen = Pens.Black;
-
-            DrawPaths(e.Graphics, paths, pen);
 
             nextPage += 1;
             if (nextPage == 3)
