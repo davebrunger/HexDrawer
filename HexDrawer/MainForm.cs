@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FrameworkDrawingUtils;
 using HexDrawer.Grids;
 using HexDrawer.TuckBoxes;
 
@@ -8,6 +9,8 @@ namespace HexDrawer
     public partial class MainForm : Form
     {
         private readonly OptionsDialog optionsDialog = new OptionsDialog();
+
+        private int nextPage = 1;
 
         public MainForm()
         {
@@ -41,7 +44,17 @@ namespace HexDrawer
 
             var drawer = optionsDialog.Options.Match<IDrawer>(g => new GridDrawer(g), t => new TuckBoxDrawer(t));
             drawer.PrintPage(e.Graphics, printerSettings, 1);
-            e.HasMorePages = false;
+
+            nextPage += 1;
+            if (nextPage > drawer.GetPageCount(printerSettings))
+            {
+                nextPage = 1;
+                e.HasMorePages = false;
+            }
+            else
+            {
+                e.HasMorePages = true;
+            }
         }
 
         private void ChangeOptionsButton_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using DrawingUtils.Grids;
+using FrameworkDrawingUtils;
 
 namespace HexDrawer.Grids
 {

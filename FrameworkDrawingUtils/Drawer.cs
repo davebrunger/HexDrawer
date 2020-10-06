@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace HexDrawer
+namespace FrameworkDrawingUtils
 {
     public abstract class Drawer<T> : IDrawer where T : IDrawerOptions
     {

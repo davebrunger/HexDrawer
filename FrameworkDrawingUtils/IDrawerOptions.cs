@@ -1,4 +1,4 @@
-﻿namespace HexDrawer
+﻿namespace FrameworkDrawingUtils
 {
     public interface IDrawerOptions
     {

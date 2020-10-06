@@ -1,4 +1,6 @@
-﻿namespace HexDrawer.TuckBoxes
+﻿using FrameworkDrawingUtils;
+
+namespace HexDrawer.TuckBoxes
 {
     public class TuckBoxOptions : IDrawerOptions
     {

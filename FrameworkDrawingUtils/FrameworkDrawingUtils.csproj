@@ -61,7 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawer.cs" />
+    <Compile Include="IDrawer.cs" />
+    <Compile Include="IDrawerOptions.cs" />
     <Compile Include="PathDrawer.cs" />
+    <Compile Include="PrinterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
