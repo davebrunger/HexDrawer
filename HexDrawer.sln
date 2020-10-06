@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexDrawer", "HexDrawer\HexDrawer.csproj", "{F7EF6D2B-8762-4A86-BF4B-1722C27C6F2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuckBoxDrawer", "TuckBoxDrawer\TuckBoxDrawer.csproj", "{1D7D6755-5B2D-42C7-8905-3DE1D7D426FC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingUtils", "DrawingUtils\DrawingUtils.csproj", "{011ACD9E-1253-4BB0-AD21-38EC79B4F0D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameworkDrawingUtils", "FrameworkDrawingUtils\FrameworkDrawingUtils.csproj", "{D68365E1-4CEE-4CBB-84BC-9BC7E3FAACED}"
@@ -21,10 +19,6 @@ Global
 		{F7EF6D2B-8762-4A86-BF4B-1722C27C6F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7EF6D2B-8762-4A86-BF4B-1722C27C6F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7EF6D2B-8762-4A86-BF4B-1722C27C6F2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D7D6755-5B2D-42C7-8905-3DE1D7D426FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D7D6755-5B2D-42C7-8905-3DE1D7D426FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D7D6755-5B2D-42C7-8905-3DE1D7D426FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D7D6755-5B2D-42C7-8905-3DE1D7D426FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{011ACD9E-1253-4BB0-AD21-38EC79B4F0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{011ACD9E-1253-4BB0-AD21-38EC79B4F0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011ACD9E-1253-4BB0-AD21-38EC79B4F0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU

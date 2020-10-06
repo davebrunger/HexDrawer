@@ -1,7 +1,6 @@
-﻿using System;
-using DrawingUtils.Grids;
+﻿using DrawingUtils.Grids;
 
-namespace HexDrawer
+namespace HexDrawer.Grids
 {
     public class SquareGridPixelDimensions : IGridPixelDimensions
     {

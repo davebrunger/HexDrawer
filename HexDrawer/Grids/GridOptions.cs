@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using DrawingUtils.Grids;
 
-namespace HexDrawer
+namespace HexDrawer.Grids
 {
-    public class HexDrawerOptions
+    public class GridOptions : IDrawerOptions
     {
         public Color Colour { get; }
         
@@ -13,7 +13,7 @@ namespace HexDrawer
         
         public GridType GridType { get; }
 
-        public HexDrawerOptions(Color colour, int polygonsPerInch, float marginInInches, GridType gridType)
+        public GridOptions(Color colour, int polygonsPerInch, float marginInInches, GridType gridType)
         {
             Colour = colour;
             PolygonsPerInch = polygonsPerInch;

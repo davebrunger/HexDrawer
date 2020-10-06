@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OneOf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OneOf.2.1.155\lib\net45\OneOf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,9 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HexDrawerOptions.cs" />
-    <Compile Include="SquareGridPixelDimensions.cs" />
-    <Compile Include="HexGridPixelDimensions.cs" />
+    <Compile Include="Drawer.cs" />
+    <Compile Include="Grids\GridDrawer.cs" />
+    <Compile Include="Grids\GridOptions.cs" />
+    <Compile Include="IDrawer.cs" />
+    <Compile Include="Grids\SquareGridPixelDimensions.cs" />
+    <Compile Include="Grids\HexGridPixelDimensions.cs" />
+    <Compile Include="IDrawerOptions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,8 +68,12 @@
     <Compile Include="OptionsDialog.Designer.cs">
       <DependentUpon>OptionsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrinterSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TuckBoxes\TuckBoxDrawer.cs" />
+    <Compile Include="TuckBoxes\TuckBoxOptions.cs" />
+    <Compile Include="TuckBoxes\TuckBoxPixelDimensions.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -78,6 +89,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -100,6 +112,10 @@
       <Project>{D68365E1-4CEE-4CBB-84BC-9BC7E3FAACED}</Project>
       <Name>FrameworkDrawingUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Images\GreenGoblin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

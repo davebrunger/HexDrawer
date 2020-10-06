@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using DrawingUtils;
 using DrawingUtils.TuckBoxes;
 
-namespace TuckBoxDrawer
+namespace HexDrawer.TuckBoxes
 {
     public class TuckBoxPixelDimensions : ITuckBoxPixelDimensions
     {
